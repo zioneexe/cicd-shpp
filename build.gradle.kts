@@ -19,15 +19,14 @@ dependencies {
     implementation("org.slf4j:slf4j-api:2.0.16")
     implementation("ch.qos.logback:logback-classic:1.5.6")
 }
-tasks {
-    shadowJar {
-        archiveBaseName.set("prac2")
-        archiveVersion.set("1.0")
-        archiveClassifier.set("")
-        
-        manifest {
-            attributes(mapOf("Main-Class" to "prac.shpp.App"))
-        }
+
+tasks.shadowJar {
+    archiveBaseName.set("prac2")
+    archiveVersion.set("1.0")
+    archiveClassifier.set("")
+
+    manifest {
+        attributes(mapOf("Main-Class" to "prac.shpp.App"))
     }
 }
 
@@ -69,4 +68,12 @@ sonar {
         property("sonar.organization", "zioneexe")
         property("sonar.host.url", "https://sonarcloud.io")
     }
+}
+
+tasks.build {
+    dependsOn(tasks.shadowJar)
+}
+
+tasks.jar {
+    enabled = false
 }
