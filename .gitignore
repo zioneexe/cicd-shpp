@@ -41,6 +41,6 @@ bin/
 ### Mac OS ###
 .DS_Store
 
-### My
+### My ignores
 src/main/resources/
 logs/

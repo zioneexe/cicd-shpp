@@ -3,7 +3,6 @@ package prac.shpp.validators;
 import prac.shpp.enums.NumberType;
 
 import java.math.BigDecimal;
-import java.util.logging.Logger;
 
 import static prac.shpp.App.LOGGER;
 import static prac.shpp.validators.TypeValidator.*;
