@@ -4,6 +4,10 @@ import java.math.BigDecimal;
 
 public class TypeValidator {
 
+    private TypeValidator() {
+        throw new IllegalStateException("Utility class");
+    }
+
     public static boolean isByte(BigDecimal number) {
         return isNotDecimal(number) && isWithinByteRange(number);
     }

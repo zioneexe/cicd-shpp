@@ -30,6 +30,10 @@ public class TablePrinter {
 
     private static final int COLUMN_WIDTH = 10;
 
+    private TablePrinter() {
+        throw new IllegalStateException("Utility class");
+    }
+
     public static void printTable(Table table) {
         LOGGER.debug("Table printer started.");
 
@@ -45,7 +49,7 @@ public class TablePrinter {
         addHeader(header, tableWidth);
         addTableRows(header, numberTable, tableWidth);
 
-        TABLE_LOGGER.info(sb.toString());
+        TABLE_LOGGER.info("{}", sb);
         LOGGER.debug("Table printer ended its job.");
     }
 

@@ -15,6 +15,10 @@ import static prac.shpp.validators.OverflowValidator.checkIfOverflowed;
 
 public class NumberTypeProcessor {
 
+    private NumberTypeProcessor() {
+        throw new IllegalStateException("Utility class");
+    }
+
     public static void processTable(Table table, NumberType numberType) {
         LOGGER.debug("Processing table numbers.");
 

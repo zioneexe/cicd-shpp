@@ -10,6 +10,10 @@ import static prac.shpp.calculation.CalculationModule.mathContext;
 
 public class PropertiesValidator {
 
+    private PropertiesValidator() {
+        throw new IllegalStateException("Utility class");
+    }
+
     public static boolean validate(PropertiesDTO properties, NumberType numberType) {
         LOGGER.debug("Properties validation called.");
 

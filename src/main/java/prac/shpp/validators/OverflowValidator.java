@@ -9,6 +9,10 @@ import static prac.shpp.validators.TypeValidator.*;
 
 public class OverflowValidator {
 
+    private OverflowValidator() {
+        throw new IllegalStateException("Utility class");
+    }
+
     public static final BigDecimal OVERFLOW = BigDecimal.valueOf(Double.MAX_VALUE);
 
     public static boolean checkIfOverflowed(BigDecimal multiplicationResult) {

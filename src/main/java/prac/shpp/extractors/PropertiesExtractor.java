@@ -14,6 +14,10 @@ import static prac.shpp.App.LOGGER;
 
 public class PropertiesExtractor {
 
+    private PropertiesExtractor() {
+        throw new IllegalStateException("Utility class");
+    }
+
     public static final String NOT_FOUND = "not found";
 
     public static PropertiesDTO extractNumberProperties(String filename) throws IOException {

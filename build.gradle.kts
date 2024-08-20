@@ -9,6 +9,12 @@ plugins {
 group = "org.example"
 version = "1.0-SNAPSHOT"
 
+val mockitoCoreVersion = "2.1.0"
+val mockitoInlineVersion = "5.2.0"
+val mockitoJunitJupiterVersion = "5.12.0"
+val slf4jApiVersion = "2.0.16"
+val logbackClassicVersion = "1.5+"
+
 repositories {
     mavenCentral()
 }
@@ -16,11 +22,11 @@ repositories {
 dependencies {
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
-    testImplementation("org.mockito:mockito-core:2.1.0")
-    testImplementation("org.mockito:mockito-inline:5.2.0")
-    testImplementation("org.mockito:mockito-junit-jupiter:5.12.0")
-    implementation("org.slf4j:slf4j-api:2.0.16")
-    implementation("ch.qos.logback:logback-classic:1.5.6")
+    testImplementation("org.mockito:mockito-core:$mockitoCoreVersion")
+    testImplementation("org.mockito:mockito-inline:$mockitoInlineVersion")
+    testImplementation("org.mockito:mockito-junit-jupiter:$mockitoJunitJupiterVersion")
+    implementation("org.slf4j:slf4j-api:$slf4jApiVersion")
+    implementation("ch.qos.logback:logback-classic:$logbackClassicVersion")
 }
 
 tasks.shadowJar {
