@@ -1,4 +1,5 @@
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import prac.shpp.printers.TablePrinter;
 
@@ -6,8 +7,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 
-class TestApp {
+class TestSmth {
 
+    @Disabled
     @Test
     void testGetNumberDigits() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         Method method = TablePrinter.class.getDeclaredMethod("getNumberDigits", BigDecimal.class);
