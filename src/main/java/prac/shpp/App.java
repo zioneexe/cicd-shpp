@@ -14,7 +14,7 @@ import java.io.IOException;
 
 public class App {
 
-    public static final String FILENAME = "app.properties";
+    public static final String FILENAME = "test.properties";
 
     public static final Logger LOGGER = LoggerFactory.getLogger("com.example.main");
 

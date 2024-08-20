@@ -16,7 +16,7 @@ public class OverflowValidator {
     }
 
     public static BigDecimal markIfOverflowed(BigDecimal multiplicationResult, NumberType numberType) {
-        if (!validate(multiplicationResult, numberType)) {
+        if (!validateRange(multiplicationResult, numberType)) {
             LOGGER.trace("A number marked OVERFLOW");
 
             return OVERFLOW;
@@ -39,8 +39,27 @@ public class OverflowValidator {
                 return isFloat(number);
             case DOUBLE:
                 return isDouble(number);
-            default:
-                throw new IllegalStateException("Unexpected value: " + numberType);
         }
+
+        return false;
+    }
+
+    public static boolean validateRange(BigDecimal number, NumberType numberType) {
+        switch (numberType) {
+            case BYTE:
+                return isWithinByteRange(number);
+            case SHORT:
+                return isWithinShortRange(number);
+            case INT:
+                return isWithinIntRange(number);
+            case LONG:
+                return isWithinLongRange(number);
+            case FLOAT:
+                return isWithinFloatRange(number);
+            case DOUBLE:
+                return isWithinDoubleRange(number);
+        }
+
+        return false;
     }
 }

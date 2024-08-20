@@ -53,10 +53,9 @@ public class NumberTypeProcessor {
         List<BigDecimal> validatedHeader = header.stream()
                 .map(number -> {
                     BigDecimal markedNumber = OverflowValidator.markIfOverflowed(number, numberType);
-                    BigDecimal convertedNumber = convertNumber(markedNumber, numberType)
-                            .stripTrailingZeros();
+                    BigDecimal convertedNumber = convertNumber(markedNumber, numberType);
 
-                    return roundIfNeeded(convertedNumber);
+                    return round(convertedNumber);
                 })
                 .collect(Collectors.toList());
         LOGGER.trace("Converted and rounded header numbers.");
@@ -69,10 +68,9 @@ public class NumberTypeProcessor {
                 .map(row -> row.stream()
                         .map(number -> {
                             BigDecimal markedNumber = OverflowValidator.markIfOverflowed(number, numberType);
-                            BigDecimal convertedNumber = convertNumber(markedNumber, numberType)
-                                    .stripTrailingZeros();
+                            BigDecimal convertedNumber = convertNumber(markedNumber, numberType);
 
-                            return roundIfNeeded(convertedNumber);
+                            return round(convertedNumber);
                         })
                         .collect(Collectors.toList()))
                 .collect(Collectors.toList());
@@ -81,11 +79,13 @@ public class NumberTypeProcessor {
         return validatedNumberTable;
     }
 
-    private static BigDecimal roundIfNeeded(BigDecimal number) {
+    private static BigDecimal round(BigDecimal number) {
+        if (checkIfOverflowed(number)) return number;
+
         if (number.scale() > PRECISION) {
-            return number.round(mathContext);
+            number = number.round(mathContext);
         }
 
-        return number;
+        return number.stripTrailingZeros();
     }
 }

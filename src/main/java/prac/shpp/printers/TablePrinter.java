@@ -111,4 +111,8 @@ public class TablePrinter {
     private static int getNumberLength(BigDecimal n) {
         return n.toString().length();
     }
+
+    public static String getPrintedTable() {
+        return sb.toString();
+    }
 }
