@@ -2,6 +2,7 @@ package prac.shpp.extractors;
 
 import prac.shpp.App;
 import prac.shpp.dtos.PropertiesDTO;
+import prac.shpp.enums.NumberType;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -18,7 +19,7 @@ public class PropertiesExtractor {
 
     public static final String NOT_FOUND = "not found";
 
-    public static PropertiesDTO extract() throws IOException {
+    public static PropertiesDTO extractNumberProperties() throws IOException {
         Properties appProperties = new Properties();
 
         try (InputStream inputStream = App.class.getClassLoader().getResourceAsStream(FILENAME)) {
@@ -47,6 +48,23 @@ public class PropertiesExtractor {
                 throw new FileNotFoundException("File to extract properties not found.");
             }
         }
+    }
+
+    public static NumberType extractNumberType() {
+        String numberTypeString = System.getProperty("numberType");
+        if (numberTypeString != null) {
+            try {
+                NumberType numberType = NumberType.valueOf(numberTypeString.toUpperCase());
+                LOGGER.info("Type property passed: {}", numberTypeString);
+                LOGGER.info("Setting type to {}", numberType);
+
+                return numberType;
+            } catch (IllegalArgumentException e) {
+                LOGGER.warn("Invalid argument passed: {}. Defaulting to INT.", numberTypeString);
+            }
+        }
+
+        return NumberType.INT;
     }
 
 }

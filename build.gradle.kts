@@ -16,6 +16,8 @@ repositories {
 dependencies {
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
+    testImplementation("org.mockito:mockito-core:2.1.0")
+    testImplementation("org.mockito:mockito-inline:5.2.0")
     implementation("org.slf4j:slf4j-api:2.0.16")
     implementation("ch.qos.logback:logback-classic:1.5.6")
 }
@@ -73,6 +75,8 @@ sonar {
         property("sonar.projectKey", "zioneexe_prac2")
         property("sonar.organization", "zioneexe")
         property("sonar.host.url", "https://sonarcloud.io")
+        property("sonar.junit.reportPaths", "build/test-results/test")
+        property("sonar.coverage.jacoco.xmlReportPaths", "build/reports/jacoco/test/jacocoTestReport.xml")
     }
 }
 

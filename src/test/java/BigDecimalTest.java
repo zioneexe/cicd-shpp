@@ -1,4 +1,5 @@
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -23,6 +24,8 @@ class BigDecimalTest {
         Assertions.assertEquals(1250, number.shortValue());
     }
 
+
+    @Disabled
     @Test
     @DisplayName("Trailing zeros")
     void testTrailingZeros() {

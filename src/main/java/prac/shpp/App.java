@@ -20,19 +20,8 @@ public class App {
         LOGGER.info("App started.");
         LOGGER.info("Using default INT type.");
 
-        NumberType numberType = NumberType.INT;
-        String numberTypeString = System.getProperty("numberType");
-        if (numberTypeString != null) {
-            try {
-                numberType = NumberType.valueOf(numberTypeString.toUpperCase());
-                LOGGER.info("Type property passed: {}", numberTypeString);
-                LOGGER.info("Setting type to {}", numberType);
-            } catch (IllegalArgumentException e) {
-                LOGGER.warn("Invalid argument passed: {}. Defaulting to INT.", numberTypeString);
-            }
-        }
-
-        PropertiesDTO properties = PropertiesExtractor.extract();
+        NumberType numberType = PropertiesExtractor.extractNumberType();
+        PropertiesDTO properties = PropertiesExtractor.extractNumberProperties();
         LOGGER.info("Extracted properties: {}", properties);
 
         if (!PropertiesValidator.validate(properties, numberType)) {
@@ -40,7 +29,8 @@ public class App {
             return;
         }
 
-        Table resultTable = CalculationModule.calculateTable(properties, numberType);
+        CalculationModule calculator = new CalculationModule(properties, numberType);
+        Table resultTable = calculator.createAndProcessTable();
         LOGGER.info("Table calculated. Passing to a printer.");
 
         TablePrinter.printTable(resultTable);

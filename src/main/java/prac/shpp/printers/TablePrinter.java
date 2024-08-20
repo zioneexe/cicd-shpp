@@ -43,15 +43,18 @@ public class TablePrinter {
 
         sb.append(NEW_LINE);
         addHeader(header, tableWidth);
+        addTableRows(header, numberTable, tableWidth);
 
+        TABLE_LOGGER.info(sb.toString());
+        LOGGER.debug("Table printer ended it's job.");
+    }
+
+    private static void addTableRows(List<BigDecimal> header, List<List<BigDecimal>> numberTable, int tableWidth) {
         for (int i = 0; i < numberTable.size(); ++i) {
             addNumberCell(header.get(i));
             addNumberRow(numberTable.get(i));
             addNewLine(tableWidth);
         }
-
-        TABLE_LOGGER.info(sb.toString());
-        LOGGER.debug("Table printer ended it's job.");
     }
 
     private static void addHeader(List<BigDecimal> header, int tableWidth) {

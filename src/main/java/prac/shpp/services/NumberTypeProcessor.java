@@ -21,29 +21,8 @@ public class NumberTypeProcessor {
         List<BigDecimal> header = table.getHeader();
         List<List<BigDecimal>> numberTable = table.getNumberTable();
 
-        List<BigDecimal> validatedHeader = header.stream()
-                .map(number -> {
-                    BigDecimal markedNumber = OverflowValidator.markIfOverflowed(number, numberType);
-                    BigDecimal convertedNumber = convertNumber(markedNumber, numberType)
-                            .stripTrailingZeros();
-
-                    return roundIfNeeded(convertedNumber);
-                })
-                .collect(Collectors.toList());
-        LOGGER.trace("Converted and rounded header numbers.");
-
-        List<List<BigDecimal>> validatedNumberTable = numberTable.stream()
-                .map(row -> row.stream()
-                    .map(number -> {
-                        BigDecimal markedNumber = OverflowValidator.markIfOverflowed(number, numberType);
-                        BigDecimal convertedNumber = convertNumber(markedNumber, numberType)
-                                .stripTrailingZeros();
-
-                        return roundIfNeeded(convertedNumber);
-                    })
-                    .collect(Collectors.toList()))
-                .collect(Collectors.toList());
-        LOGGER.trace("Converted and rounded table numbers.");
+        List<BigDecimal> validatedHeader = processHeader(header, numberType);
+        List<List<BigDecimal>> validatedNumberTable = processNumberTable(numberTable, numberType);
 
         table.setHeader(validatedHeader);
         table.setNumberTable(validatedNumberTable);
@@ -68,6 +47,38 @@ public class NumberTypeProcessor {
             default:
                 throw new IllegalStateException("Unexpected value: " + numberType);
         }
+    }
+
+    private static List<BigDecimal> processHeader(List<BigDecimal> header, NumberType numberType) {
+        List<BigDecimal> validatedHeader = header.stream()
+                .map(number -> {
+                    BigDecimal markedNumber = OverflowValidator.markIfOverflowed(number, numberType);
+                    BigDecimal convertedNumber = convertNumber(markedNumber, numberType)
+                            .stripTrailingZeros();
+
+                    return roundIfNeeded(convertedNumber);
+                })
+                .collect(Collectors.toList());
+        LOGGER.trace("Converted and rounded header numbers.");
+
+        return validatedHeader;
+    }
+
+    private static List<List<BigDecimal>> processNumberTable(List<List<BigDecimal>> numberTable, NumberType numberType) {
+        List<List<BigDecimal>> validatedNumberTable = numberTable.stream()
+                .map(row -> row.stream()
+                        .map(number -> {
+                            BigDecimal markedNumber = OverflowValidator.markIfOverflowed(number, numberType);
+                            BigDecimal convertedNumber = convertNumber(markedNumber, numberType)
+                                    .stripTrailingZeros();
+
+                            return roundIfNeeded(convertedNumber);
+                        })
+                        .collect(Collectors.toList()))
+                .collect(Collectors.toList());
+        LOGGER.trace("Converted and rounded table numbers.");
+
+        return validatedNumberTable;
     }
 
     private static BigDecimal roundIfNeeded(BigDecimal number) {
