@@ -46,7 +46,7 @@ public class TablePrinter {
         addTableRows(header, numberTable, tableWidth);
 
         TABLE_LOGGER.info(sb.toString());
-        LOGGER.debug("Table printer ended it's job.");
+        LOGGER.debug("Table printer ended its job.");
     }
 
     private static void addTableRows(List<BigDecimal> header, List<List<BigDecimal>> numberTable, int tableWidth) {

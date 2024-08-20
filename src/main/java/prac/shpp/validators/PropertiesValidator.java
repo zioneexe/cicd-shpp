@@ -17,8 +17,10 @@ public class PropertiesValidator {
         BigDecimal maximumNumber = new BigDecimal(properties.getMaximumNumber(), mathContext);
         BigDecimal step = new BigDecimal(properties.getStep(), mathContext);
 
-        return OverflowValidator.validate(minimumNumber, numberType) &&
+        boolean noOverflow = OverflowValidator.validate(minimumNumber, numberType) &&
                 OverflowValidator.validate(maximumNumber, numberType) &&
                 OverflowValidator.validate(step, numberType);
+
+        return noOverflow && step.compareTo(BigDecimal.ZERO) > 0 && maximumNumber.compareTo(minimumNumber) > 0;
     }
 }

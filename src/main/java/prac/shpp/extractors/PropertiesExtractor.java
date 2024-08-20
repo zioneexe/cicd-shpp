@@ -4,7 +4,6 @@ import prac.shpp.App;
 import prac.shpp.dtos.PropertiesDTO;
 import prac.shpp.enums.NumberType;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -15,14 +14,12 @@ import static prac.shpp.App.LOGGER;
 
 public class PropertiesExtractor {
 
-    public static final String FILENAME = "app.properties";
-
     public static final String NOT_FOUND = "not found";
 
-    public static PropertiesDTO extractNumberProperties() throws IOException {
+    public static PropertiesDTO extractNumberProperties(String filename) throws IOException {
         Properties appProperties = new Properties();
 
-        try (InputStream inputStream = App.class.getClassLoader().getResourceAsStream(FILENAME)) {
+        try (InputStream inputStream = App.class.getClassLoader().getResourceAsStream(filename)) {
 
             if (inputStream == null) {
                 LOGGER.error("Could not extract properties file. File not found of is not present in classpath.");
@@ -32,9 +29,9 @@ public class PropertiesExtractor {
             }
 
             try (InputStreamReader inputStreamReader = new InputStreamReader(inputStream, StandardCharsets.UTF_8)) {
-                LOGGER.info("App configuration path is: {}", FILENAME);
+                LOGGER.info("App configuration path is: {}", filename);
                 appProperties.load(inputStreamReader);
-                LOGGER.debug("Properties loaded from path: {}", FILENAME);
+                LOGGER.debug("Properties loaded from path: {}", filename);
 
                 return PropertiesDTO.builder()
                         .minimumNumber(appProperties.getProperty("minimum_number", NOT_FOUND))
@@ -42,16 +39,13 @@ public class PropertiesExtractor {
                         .step(appProperties.getProperty("step", NOT_FOUND))
                         .build();
 
-            } catch (FileNotFoundException e) {
-                LOGGER.error("File to extract properties not found. Exception", e);
-
-                throw new FileNotFoundException("File to extract properties not found.");
             }
         }
     }
 
     public static NumberType extractNumberType() {
         String numberTypeString = System.getProperty("numberType");
+
         if (numberTypeString != null) {
             try {
                 NumberType numberType = NumberType.valueOf(numberTypeString.toUpperCase());

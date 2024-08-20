@@ -14,6 +14,8 @@ import java.io.IOException;
 
 public class App {
 
+    public static final String FILENAME = "app.properties";
+
     public static final Logger LOGGER = LoggerFactory.getLogger("com.example.main");
 
     public static void main(String[] args) throws IOException {
@@ -21,7 +23,7 @@ public class App {
         LOGGER.info("Using default INT type.");
 
         NumberType numberType = PropertiesExtractor.extractNumberType();
-        PropertiesDTO properties = PropertiesExtractor.extractNumberProperties();
+        PropertiesDTO properties = PropertiesExtractor.extractNumberProperties(FILENAME);
         LOGGER.info("Extracted properties: {}", properties);
 
         if (!PropertiesValidator.validate(properties, numberType)) {
