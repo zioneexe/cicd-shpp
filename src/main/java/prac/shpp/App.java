@@ -19,7 +19,7 @@ public class App {
     public static final Logger LOGGER = LoggerFactory.getLogger("com.example.main");
 
     public static void main(String[] args) throws IOException {
-        LOGGER.info("App started.");
+        LOGGER.info("App started."); // iujk
         LOGGER.info("Using default INT type.");
 
         NumberType numberType = PropertiesExtractor.extractNumberType();
