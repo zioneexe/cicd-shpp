@@ -36,4 +36,14 @@ class TestOverflowValidator {
         Assertions.assertTrue(OverflowValidator.validate(BigDecimal.ONE, NumberType.INT));
         Assertions.assertFalse(OverflowValidator.validate(new BigDecimal("947499899897497497497"), NumberType.LONG));
     }
+
+    @Test
+    void testValidateRange() {
+        Assertions.assertTrue(OverflowValidator.validateRange(BigDecimal.ONE, NumberType.BYTE));
+        Assertions.assertFalse(OverflowValidator.validateRange(BigDecimal.valueOf(32768), NumberType.SHORT));
+        Assertions.assertTrue(OverflowValidator.validateRange(new BigDecimal(Integer.MAX_VALUE), NumberType.INT));
+        Assertions.assertFalse(OverflowValidator.validateRange(new BigDecimal("947499899897497497497"), NumberType.LONG));
+        Assertions.assertTrue(OverflowValidator.validateRange(new BigDecimal(Float.MAX_VALUE).add(BigDecimal.TEN), NumberType.FLOAT)); // ???
+        Assertions.assertTrue(OverflowValidator.validateRange(new BigDecimal(Float.MAX_VALUE).add(BigDecimal.TEN), NumberType.DOUBLE));
+    }
 }

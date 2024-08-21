@@ -28,7 +28,7 @@ public class TablePrinter {
 
     private static final char JOINT = '+';
 
-    private static final int COLUMN_WIDTH = 10;
+    private static final int COLUMN_WIDTH = 14;
 
     private TablePrinter() {
         throw new IllegalStateException("Utility class");
