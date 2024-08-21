@@ -15,10 +15,6 @@ import static prac.shpp.validators.OverflowValidator.checkIfOverflowed;
 
 public class NumberTypeProcessor {
 
-    private NumberTypeProcessor() {
-        throw new IllegalStateException("Utility class");
-    }
-
     public static void processTable(Table table, NumberType numberType) {
         LOGGER.debug("Processing table numbers.");
 
@@ -32,7 +28,7 @@ public class NumberTypeProcessor {
         table.setNumberTable(validatedNumberTable);
     }
 
-    private static BigDecimal convertNumber(BigDecimal number, NumberType numberType) {
+    protected static BigDecimal convertNumber(BigDecimal number, NumberType numberType) {
         if (checkIfOverflowed(number)) return number;
 
         switch (numberType) {
@@ -83,7 +79,7 @@ public class NumberTypeProcessor {
         return validatedNumberTable;
     }
 
-    private static BigDecimal round(BigDecimal number) {
+    protected static BigDecimal round(BigDecimal number) {
         if (checkIfOverflowed(number)) return number;
 
         if (number.scale() > PRECISION) {

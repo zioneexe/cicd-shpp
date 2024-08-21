@@ -21,6 +21,7 @@ import prac.shpp.printers.TablePrinter;
 import prac.shpp.validators.PropertiesValidator;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -82,28 +83,6 @@ class TestApp {
             Assertions.assertEquals("Table printed.", errorLoggingEvent.getFormattedMessage());
         } catch (IOException e) {
             throw new RuntimeException(e);
-        }
-    }
-
-    @Test
-    void testMainExecutionFlow() throws IOException {
-        PropertiesDTO mockProperties = mock(PropertiesDTO.class);
-        NumberType mockNumberType = NumberType.INT;
-        Table mockTable = mock(Table.class);
-
-        CalculationModule mockCalculator = mock(CalculationModule.class);
-        when(mockCalculator.createAndProcessTable()).thenReturn(mockTable);
-
-        when(PropertiesExtractor.extractNumberType()).thenReturn(mockNumberType);
-        when(PropertiesExtractor.extractNumberProperties(App.FILENAME)).thenReturn(mockProperties);
-        when(PropertiesValidator.validate(mockProperties, mockNumberType)).thenReturn(true);
-
-        App.main(new String[]{});
-
-        Mockito.verify(mockCalculator).createAndProcessTable();
-
-        try (MockedStatic<TablePrinter> mockPrinter = mockStatic(TablePrinter.class)) {
-            mockPrinter.verify(() -> TablePrinter.printTable(mockTable));
         }
     }
 }

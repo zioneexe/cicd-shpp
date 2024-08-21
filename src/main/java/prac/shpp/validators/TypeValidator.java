@@ -9,27 +9,27 @@ public class TypeValidator {
     }
 
     public static boolean isByte(BigDecimal number) {
-        return isNotDecimal(number) && isWithinByteRange(number);
+        return isInteger(number) && isWithinByteRange(number);
     }
 
     public static boolean isShort(BigDecimal number) {
-        return isNotDecimal(number) && isWithinShortRange(number);
+        return isInteger(number) && isWithinShortRange(number);
     }
 
     public static boolean isInt(BigDecimal number) {
-        return isNotDecimal(number) && isWithinIntRange(number);
+        return isInteger(number) && isWithinIntRange(number);
     }
 
     public static boolean isLong(BigDecimal number) {
-        return isNotDecimal(number) && isWithinLongRange(number);
+        return isInteger(number) && isWithinLongRange(number);
     }
 
     public static boolean isFloat(BigDecimal number) {
-        return isDecimal(number) && isWithinFloatRange(number);
+        return isWithinFloatRange(number);
     }
 
     public static boolean isDouble(BigDecimal number) {
-        return isDecimal(number) && isWithinDoubleRange(number);
+        return isWithinDoubleRange(number);
     }
 
     public static boolean isWithinByteRange(BigDecimal number) {
@@ -53,20 +53,16 @@ public class TypeValidator {
     }
 
     public static boolean isWithinFloatRange(BigDecimal number) {
-        return number.compareTo(BigDecimal.valueOf(Float.MIN_VALUE)) >= 0 &&
+        return number.compareTo(BigDecimal.valueOf(-Float.MAX_VALUE)) >= 0 &&
                 number.compareTo(BigDecimal.valueOf(Float.MAX_VALUE)) <= 0;
     }
 
     public static boolean isWithinDoubleRange(BigDecimal number) {
-        return number.compareTo(BigDecimal.valueOf(Double.MIN_VALUE)) >= 0 &&
+        return number.compareTo(BigDecimal.valueOf(-Double.MAX_VALUE)) >= 0 &&
                 number.compareTo(BigDecimal.valueOf(Double.MAX_VALUE)) <= 0;
     }
 
-    private static boolean isDecimal(BigDecimal number) {
-        return number.stripTrailingZeros().scale() >= 0;
-    }
-
-    private static boolean isNotDecimal(BigDecimal number) {
-        return number.stripTrailingZeros().scale() <= 0;
+    private static boolean isInteger(BigDecimal number) {
+        return number.signum() == 0 || number.scale() <= 0 || number.stripTrailingZeros().scale() <= 0;
     }
 }
