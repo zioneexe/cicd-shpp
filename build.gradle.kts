@@ -35,7 +35,7 @@ tasks.register<Jar>("thinJar") {
 
     manifest {
         attributes(
-            "Main-Class" to "com.prac.shpp.App",
+            "Main-Class" to "prac.shpp.App",
             "Class-Path" to "config/ " + configurations.runtimeClasspath.get().joinToString { "lib/" + it.name }
         )
     }
