@@ -3,8 +3,8 @@ package calculation;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import prac.shpp.calculation.CalculationModule;
-import prac.shpp.dtos.PropertiesDTO;
-import prac.shpp.entities.Table;
+import prac.shpp.pojo.Properties;
+import prac.shpp.pojo.Table;
 import prac.shpp.enums.NumberType;
 
 import java.math.BigDecimal;
@@ -14,7 +14,7 @@ class TestCalculationModule {
 
     @Test
     void testValidTableCreation() {
-        PropertiesDTO properties = new PropertiesDTO("1", "2", "1");
+        Properties properties = new Properties("1", "2", "1");
         NumberType numberType = NumberType.BYTE;
 
         CalculationModule calculator = new CalculationModule(properties, numberType);

@@ -3,8 +3,8 @@ package prac.shpp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import prac.shpp.calculation.CalculationModule;
-import prac.shpp.dtos.PropertiesDTO;
-import prac.shpp.entities.Table;
+import prac.shpp.pojo.Properties;
+import prac.shpp.pojo.Table;
 import prac.shpp.enums.NumberType;
 import prac.shpp.extractors.PropertiesExtractor;
 import prac.shpp.printers.TablePrinter;
@@ -14,16 +14,16 @@ import java.io.IOException;
 
 public class App {
 
-    public static final String FILENAME = "app2.properties";
+    public static final String FILENAME = "app.properties";
 
     public static final Logger LOGGER = LoggerFactory.getLogger("com.example.main");
 
     public static void main(String[] args) throws IOException {
-        LOGGER.info("App started."); // iujk
+        LOGGER.info("App started.");
         LOGGER.info("Using default INT type.");
 
         NumberType numberType = PropertiesExtractor.extractNumberType();
-        PropertiesDTO properties = PropertiesExtractor.extractNumberProperties(FILENAME);
+        Properties properties = PropertiesExtractor.extractNumberProperties(FILENAME);
         LOGGER.info("Extracted properties: {}", properties);
 
         if (!PropertiesValidator.validate(properties, numberType)) {

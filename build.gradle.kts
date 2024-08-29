@@ -12,7 +12,6 @@ version = "1.0-SNAPSHOT"
 val mockitoCoreVersion = "2.1.0"
 val mockitoInlineVersion = "5.2.0"
 val mockitoJunitJupiterVersion = "5.12.0"
-val slf4jApiVersion = "2.0.16"
 val logbackClassicVersion = "1.5+"
 
 repositories {
@@ -25,18 +24,47 @@ dependencies {
     testImplementation("org.mockito:mockito-core:$mockitoCoreVersion")
     testImplementation("org.mockito:mockito-inline:$mockitoInlineVersion")
     testImplementation("org.mockito:mockito-junit-jupiter:$mockitoJunitJupiterVersion")
-    implementation("org.slf4j:slf4j-api:$slf4jApiVersion")
     implementation("ch.qos.logback:logback-classic:$logbackClassicVersion")
 }
 
-tasks.shadowJar {
-    archiveBaseName.set("prac2")
-    archiveVersion.set("1.0")
-    archiveClassifier.set("")
+tasks.register<Jar>("thinJar") {
+    description = "Creates a thin jar."
+    group = JavaBasePlugin.BUILD_NEEDED_TASK_NAME
+
+    archiveClassifier.set("thin")
 
     manifest {
-        attributes(mapOf("Main-Class" to "prac.shpp.App"))
+        attributes(
+            "Main-Class" to "com.prac.shpp.App",
+            "Class-Path" to "config/ " + configurations.runtimeClasspath.get().joinToString { "lib/" + it.name }
+        )
     }
+
+    from(sourceSets.main.get().output.classesDirs)
+
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+tasks.register<Zip>("thinJarZip") {
+    description = "Packages everything into a zip archive with thin jar (dependencies, resources and properties outside)."
+    group = JavaBasePlugin.COMPILE_CLASSPATH_PACKAGING_SYSTEM_PROPERTY
+
+    dependsOn("thinJar")
+
+    archiveFileName.set("thinJar.zip")
+    destinationDirectory.set(layout.buildDirectory.dir("zip"))
+
+    from(tasks.named<Jar>("thinJar").get().outputs.files.singleFile)
+
+    from("src/main/resources") {
+        into("config/")
+    }
+
+    from(configurations.runtimeClasspath) {
+        into("lib/")
+    }
+
+    includeEmptyDirs = false
 }
 
 tasks.test {
@@ -88,7 +116,7 @@ sonar {
 }
 
 tasks.build {
-    dependsOn(tasks.shadowJar)
+    dependsOn(tasks.named("thinJarZip"))
 }
 
 tasks.jar {

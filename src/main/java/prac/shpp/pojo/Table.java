@@ -1,4 +1,4 @@
-package prac.shpp.entities;
+package prac.shpp.pojo;
 
 import lombok.Builder;
 import lombok.Getter;

@@ -2,7 +2,7 @@ package validators;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import prac.shpp.dtos.PropertiesDTO;
+import prac.shpp.pojo.Properties;
 import prac.shpp.enums.NumberType;
 import prac.shpp.validators.PropertiesValidator;
 
@@ -10,7 +10,7 @@ class TestPropertiesValidator {
 
     @Test
     void testValidateIntegersWithFloatAndDouble() {
-        PropertiesDTO properties = new PropertiesDTO("4", "6", "1");
+        Properties properties = new Properties("4", "6", "1");
         NumberType floatType = NumberType.FLOAT;
         NumberType doubleType = NumberType.DOUBLE;
 
@@ -20,7 +20,7 @@ class TestPropertiesValidator {
 
     @Test
     void testValidateDecimalWithDecimal() {
-        PropertiesDTO properties = new PropertiesDTO("0.5", "0.6", "0.01");
+        Properties properties = new Properties("0.5", "0.6", "0.01");
         NumberType floatType = NumberType.FLOAT;
         NumberType doubleType = NumberType.DOUBLE;
 
@@ -30,7 +30,7 @@ class TestPropertiesValidator {
 
     @Test
     void testValidateDecimalWithIntegerTypes() {
-        PropertiesDTO properties = new PropertiesDTO("0.2", "6", "0.1");
+        Properties properties = new Properties("0.2", "6", "0.1");
         NumberType byteType = NumberType.BYTE;
         NumberType shortType = NumberType.SHORT;
         NumberType intType = NumberType.INT;
@@ -44,7 +44,7 @@ class TestPropertiesValidator {
 
     @Test
     void testValidateIntegersWithInt() {
-        PropertiesDTO properties = new PropertiesDTO("1", "6", "1");
+        Properties properties = new Properties("1", "6", "1");
         NumberType numberType = NumberType.INT;
 
         Assertions.assertTrue(PropertiesValidator.validate(properties, numberType));
@@ -52,7 +52,7 @@ class TestPropertiesValidator {
 
     @Test
     void testValidateZeroStep() {
-        PropertiesDTO properties = new PropertiesDTO("4", "6", "0");
+        Properties properties = new Properties("4", "6", "0");
         NumberType numberType = NumberType.INT;
 
         Assertions.assertFalse(PropertiesValidator.validate(properties, numberType));
@@ -60,7 +60,7 @@ class TestPropertiesValidator {
 
     @Test
     void testValidateNegativeStep() {
-        PropertiesDTO properties = new PropertiesDTO("4", "6", "-4");
+        Properties properties = new Properties("4", "6", "-4");
         NumberType numberType = NumberType.INT;
 
         Assertions.assertFalse(PropertiesValidator.validate(properties, numberType));
@@ -68,7 +68,7 @@ class TestPropertiesValidator {
 
     @Test
     void testValidateEqualNumbers() {
-        PropertiesDTO properties = new PropertiesDTO("4", "4", "1");
+        Properties properties = new Properties("4", "4", "1");
         NumberType numberType = NumberType.INT;
 
         Assertions.assertFalse(PropertiesValidator.validate(properties, numberType));
@@ -76,7 +76,7 @@ class TestPropertiesValidator {
 
     @Test
     void testValidateInvalidNumbers() {
-        PropertiesDTO properties = new PropertiesDTO("6", "4", "1");
+        Properties properties = new Properties("6", "4", "1");
         NumberType numberType = NumberType.INT;
 
         Assertions.assertFalse(PropertiesValidator.validate(properties, numberType));

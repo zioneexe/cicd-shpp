@@ -1,4 +1,4 @@
-package prac.shpp.dtos;
+package prac.shpp.pojo;
 
 import lombok.*;
 
@@ -6,7 +6,7 @@ import lombok.*;
 @Getter
 @Builder
 @ToString
-public class PropertiesDTO {
+public class Properties {
 
     private String minimumNumber;
 
