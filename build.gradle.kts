@@ -3,11 +3,10 @@ plugins {
     id("io.freefair.lombok") version "8.7.1"
     id("jacoco")
     id("org.sonarqube") version "4.4.1.3373"
-    id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
-group = "org.example"
-version = "1.0-SNAPSHOT"
+group = "prac.shpp"
+version = "1.0"
 
 val mockitoCoreVersion = "2.1.0"
 val mockitoInlineVersion = "5.2.0"
@@ -31,12 +30,15 @@ tasks.register<Jar>("thinJar") {
     description = "Creates a thin jar."
     group = JavaBasePlugin.BUILD_NEEDED_TASK_NAME
 
-    archiveClassifier.set("thin")
+    archiveBaseName.set("prac2-thin")
 
     manifest {
         attributes(
             "Main-Class" to "prac.shpp.App",
-            "Class-Path" to "config/ " + configurations.runtimeClasspath.get().joinToString { "lib/" + it.name }
+            "Class-Path" to "config/ " +
+                    configurations.runtimeClasspath.get().files
+                        .filter { it.name.endsWith(".jar") }
+                        .joinToString(" ") { "lib/" + it.name }
         )
     }
 
