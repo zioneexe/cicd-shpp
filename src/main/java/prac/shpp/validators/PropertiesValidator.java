@@ -1,6 +1,6 @@
 package prac.shpp.validators;
 
-import prac.shpp.pojo.Properties;
+import prac.shpp.pojo.CalculationProperties;
 import prac.shpp.enums.NumberType;
 
 import java.math.BigDecimal;
@@ -14,7 +14,7 @@ public class PropertiesValidator {
         throw new IllegalStateException("Utility class");
     }
 
-    public static boolean validate(Properties properties, NumberType numberType) {
+    public static boolean validate(CalculationProperties properties, NumberType numberType) {
         LOGGER.debug("Properties validation called.");
 
         BigDecimal minimumNumber = new BigDecimal(properties.getMinimumNumber(), mathContext);
@@ -25,6 +25,6 @@ public class PropertiesValidator {
                 OverflowValidator.validate(maximumNumber, numberType) &&
                 OverflowValidator.validate(step, numberType);
 
-        return noOverflow && step.compareTo(BigDecimal.ZERO) > 0 && maximumNumber.compareTo(minimumNumber) > 0;
+        return noOverflow && step.compareTo(BigDecimal.ZERO) != 0 && maximumNumber.compareTo(minimumNumber) > 0;
     }
 }

@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 import static prac.shpp.calculation.CalculationModule.PRECISION;
 import static prac.shpp.calculation.CalculationModule.mathContext;
 import static prac.shpp.validators.OverflowValidator.checkIfOverflowed;
+import static prac.shpp.validators.TypeValidator.isInteger;
 
 public class NumberTypeProcessor {
 
@@ -30,9 +31,9 @@ public class NumberTypeProcessor {
             case LONG:
                 return BigDecimal.valueOf(number.longValue());
             case FLOAT:
-                return BigDecimal.valueOf(number.floatValue());
+                return new BigDecimal(number.floatValue());
             case DOUBLE:
-                return BigDecimal.valueOf(number.doubleValue());
+                return new BigDecimal(number.doubleValue());
             default:
                 throw new IllegalStateException("Unexpected value: " + numberType);
         }
@@ -45,6 +46,6 @@ public class NumberTypeProcessor {
             number = number.round(mathContext);
         }
 
-        return number.stripTrailingZeros();
+        return isInteger(number) ? number : number.stripTrailingZeros();
     }
 }

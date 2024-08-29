@@ -3,7 +3,7 @@ package prac.shpp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import prac.shpp.calculation.CalculationModule;
-import prac.shpp.pojo.Properties;
+import prac.shpp.pojo.CalculationProperties;
 import prac.shpp.pojo.Table;
 import prac.shpp.enums.NumberType;
 import prac.shpp.extractors.PropertiesExtractor;
@@ -23,7 +23,7 @@ public class App {
         LOGGER.info("Using default INT type.");
 
         NumberType numberType = PropertiesExtractor.extractNumberType();
-        Properties properties = PropertiesExtractor.extractNumberProperties(FILENAME);
+        CalculationProperties properties = PropertiesExtractor.extractNumberProperties(FILENAME);
         LOGGER.info("Extracted properties: {}", properties);
 
         if (!PropertiesValidator.validate(properties, numberType)) {

@@ -1,13 +1,14 @@
 package prac.shpp.extractors;
 
 import prac.shpp.App;
-import prac.shpp.pojo.Properties;
 import prac.shpp.enums.NumberType;
+import prac.shpp.pojo.CalculationProperties;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.util.Properties;
 
 import static prac.shpp.App.LOGGER;
 
@@ -19,8 +20,8 @@ public class PropertiesExtractor {
 
     public static final String NOT_FOUND = "not found";
 
-    public static Properties extractNumberProperties(String filename) throws IOException {
-        java.util.Properties appProperties = new java.util.Properties();
+    public static CalculationProperties extractNumberProperties(String filename) throws IOException {
+        Properties appProperties = new Properties();
 
         try (InputStream inputStream = App.class.getClassLoader().getResourceAsStream(filename)) {
 
@@ -36,7 +37,7 @@ public class PropertiesExtractor {
                 appProperties.load(inputStreamReader);
                 LOGGER.debug("Properties loaded from path: {}", filename);
 
-                return Properties.builder()
+                return CalculationProperties.builder()
                         .minimumNumber(appProperties.getProperty("minimum_number", NOT_FOUND))
                         .maximumNumber(appProperties.getProperty("maximum_number", NOT_FOUND))
                         .step(appProperties.getProperty("step", NOT_FOUND))
