@@ -6,7 +6,7 @@ import lombok.*;
 @Getter
 @Builder
 @ToString
-public class Properties {
+public class CalculationProperties {
 
     private String minimumNumber;
 

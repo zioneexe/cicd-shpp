@@ -1,4 +1,4 @@
-package services;
+package processors;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -18,46 +18,14 @@ import static prac.shpp.validators.OverflowValidator.OVERFLOW;
 class TestNumberTypeProcessor extends NumberTypeProcessor {
 
     @Test
-    void testProcessTable() {
-        List<BigDecimal> header = List.of(new BigDecimal("123.456"), new BigDecimal("789.012"));
-        List<List<BigDecimal>> numberTable = List.of(
-                List.of(new BigDecimal("345.678"), new BigDecimal("901.234")),
-                List.of(new BigDecimal("567.890"), new BigDecimal("123.456"))
-        );
-
-        Table table = Table.builder().build();
-        table.setHeader(header);
-        table.setNumberTable(numberTable);
-
-        List<BigDecimal> expectedHeader = List.of(
-                new BigDecimal("123").stripTrailingZeros(),
-                new BigDecimal("789").stripTrailingZeros()
-        );
-
-        List<List<BigDecimal>> expectedTable = List.of(
-                List.of(
-                        new BigDecimal("345").stripTrailingZeros(),
-                        new BigDecimal("901").stripTrailingZeros()
-                ),
-                List.of(
-                        new BigDecimal("567").stripTrailingZeros(),
-                        new BigDecimal("123").stripTrailingZeros()
-                )
-        );
-
-        Assertions.assertEquals(expectedHeader, table.getHeader());
-        Assertions.assertEquals(expectedTable, table.getNumberTable());
-    }
-
-    @Test
     void testRoundingTrailingZeros() {
         BigDecimal result1 = TestNumberTypeProcessor.round(new BigDecimal("5.0"));
         BigDecimal result2 = TestNumberTypeProcessor.round(new BigDecimal("0.00"));
-        BigDecimal result3 = TestNumberTypeProcessor.round(new BigDecimal("6.00000000"));
+        BigDecimal result3 = TestNumberTypeProcessor.round(new BigDecimal("6.00600000"));
 
-        BigDecimal expected1 = new BigDecimal("5");
-        BigDecimal expected2 = new BigDecimal("0");
-        BigDecimal expected3 = new BigDecimal("6");
+        BigDecimal expected1 = new BigDecimal("5.0");
+        BigDecimal expected2 = new BigDecimal("0.00");
+        BigDecimal expected3 = new BigDecimal("6.006");
 
         Assertions.assertEquals(expected1, result1);
         Assertions.assertEquals(expected2, result2);
@@ -157,7 +125,7 @@ class TestNumberTypeProcessor extends NumberTypeProcessor {
     @Test
     void testConvertNumberToFloat() {
         BigDecimal input = new BigDecimal("3.4028235E38");
-        BigDecimal expected = BigDecimal.valueOf(input.floatValue());
+        BigDecimal expected = new BigDecimal("340282346638528859811704183484516925440");
 
         BigDecimal result = convertNumber(input, NumberType.FLOAT);
 

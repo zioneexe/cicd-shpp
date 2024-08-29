@@ -1,6 +1,6 @@
 package prac.shpp.calculation;
 
-import prac.shpp.pojo.Properties;
+import prac.shpp.pojo.CalculationProperties;
 import prac.shpp.pojo.Table;
 import prac.shpp.enums.NumberType;
 import prac.shpp.processors.NumberTypeProcessor;
@@ -27,12 +27,16 @@ public class CalculationModule {
 
     private final NumberType numberType;
 
-    public CalculationModule(Properties properties, NumberType numberType) {
+    private boolean reverse = false;
+
+    public CalculationModule(CalculationProperties properties, NumberType numberType) {
         this.minimumNumber = new BigDecimal(properties.getMinimumNumber(), mathContext);
         this.maximumNumber = new BigDecimal(properties.getMaximumNumber(), mathContext);
         this.step = new BigDecimal(properties.getStep(), mathContext);
 
         this.numberType = numberType;
+
+        if (step.compareTo(BigDecimal.ZERO) < 0) reverse = true;
     }
 
     public Table createAndProcessTable() {
@@ -47,11 +51,12 @@ public class CalculationModule {
         List<BigDecimal> tableHeader = new ArrayList<>();
         List<List<BigDecimal>> numbersTable = new ArrayList<>();
 
-        BigDecimal rowValue = new BigDecimal(minimumNumber.toString());
-        BigDecimal convertedRowValue = NumberTypeProcessor.processNumber(rowValue, numberType);
+        BigDecimal rowValue = new BigDecimal(reverse ? maximumNumber.toString() : minimumNumber.toString());
 
-        while (rowValue.compareTo(maximumNumber) < 1) {
+        while (reverse ? rowValue.compareTo(minimumNumber) > -1 : rowValue.compareTo(maximumNumber) < 1) {
             List<BigDecimal> currentRow = calculateRow(rowValue);
+
+            BigDecimal convertedRowValue = NumberTypeProcessor.processNumber(rowValue, numberType);
 
             tableHeader.add(convertedRowValue);
             numbersTable.add(currentRow);
@@ -65,9 +70,9 @@ public class CalculationModule {
     private List<BigDecimal> calculateRow(BigDecimal rowValue) {
         List<BigDecimal> currentRow = new ArrayList<>();
 
-        BigDecimal columnValue = new BigDecimal(minimumNumber.toString(), mathContext);
+        BigDecimal columnValue = new BigDecimal(reverse ? maximumNumber.toString() : minimumNumber.toString());
 
-        while (columnValue.compareTo(maximumNumber) < 1) {
+        while (reverse ? columnValue.compareTo(minimumNumber) > -1 : columnValue.compareTo(maximumNumber) < 1) {
             BigDecimal result = rowValue.multiply(columnValue);
             BigDecimal convertedResult = NumberTypeProcessor.processNumber(result, numberType);
 

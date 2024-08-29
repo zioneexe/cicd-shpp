@@ -102,7 +102,7 @@ public class TablePrinter {
         } else {
             int numberDigits = getNumberLength(number);
             TablePrinter.sb.append(String.valueOf(SPACE).repeat(Math.max(0, COLUMN_WIDTH - numberDigits)));
-            TablePrinter.sb.append(number);
+            TablePrinter.sb.append(number.toPlainString());
         }
 
     }

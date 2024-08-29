@@ -62,7 +62,7 @@ public class TypeValidator {
                 number.compareTo(BigDecimal.valueOf(Double.MAX_VALUE)) <= 0;
     }
 
-    private static boolean isInteger(BigDecimal number) {
+    public static boolean isInteger(BigDecimal number) {
         return number.signum() == 0 || number.scale() <= 0 || number.stripTrailingZeros().scale() <= 0;
     }
 }

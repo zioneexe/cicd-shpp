@@ -2,13 +2,13 @@ package extractors;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import prac.shpp.pojo.Properties;
+import prac.shpp.pojo.CalculationProperties;
 import prac.shpp.enums.NumberType;
 import prac.shpp.extractors.PropertiesExtractor;
 
 import java.io.IOException;
 
-class TestPropertiesExtractor {
+class TestCalculationPropertiesExtractor {
 
     @Test
     void testNumberTypeStringIsNotSet() {
@@ -50,7 +50,7 @@ class TestPropertiesExtractor {
     @Test
     void testExtractNumberPropertiesValidFile() throws IOException {
         String validFilename = "test.properties";
-        Properties properties = PropertiesExtractor.extractNumberProperties(validFilename);
+        CalculationProperties properties = PropertiesExtractor.extractNumberProperties(validFilename);
 
         Assertions.assertEquals("5", properties.getMinimumNumber());
         Assertions.assertEquals("6", properties.getMaximumNumber());

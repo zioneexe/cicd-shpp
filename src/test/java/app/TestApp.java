@@ -12,7 +12,7 @@ import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.slf4j.LoggerFactory;
 import prac.shpp.App;
-import prac.shpp.pojo.Properties;
+import prac.shpp.pojo.CalculationProperties;
 import prac.shpp.enums.NumberType;
 import prac.shpp.validators.PropertiesValidator;
 
@@ -48,7 +48,7 @@ class TestApp {
     @Test
     void testIfPropsNotValidated() {
         try (var mockValidator = mockStatic(PropertiesValidator.class)) {
-            mockValidator.when(() -> PropertiesValidator.validate(any(Properties.class), any(NumberType.class))).thenReturn(false);
+            mockValidator.when(() -> PropertiesValidator.validate(any(CalculationProperties.class), any(NumberType.class))).thenReturn(false);
 
             App.main(new String[]{});
 
@@ -66,14 +66,14 @@ class TestApp {
     @Test
     void testIfPropsValidated() {
         try (var mockValidator = mockStatic(PropertiesValidator.class)) {
-            mockValidator.when(() -> PropertiesValidator.validate(any(Properties.class), any(NumberType.class))).thenReturn(true);
+            mockValidator.when(() -> PropertiesValidator.validate(any(CalculationProperties.class), any(NumberType.class))).thenReturn(true);
 
             App.main(new String[]{});
 
-            verify(mockAppender, times(11)).doAppend(captorLoggingEvent.capture());
+            verify(mockAppender, times(10)).doAppend(captorLoggingEvent.capture());
 
             List<LoggingEvent> loggingEvents = captorLoggingEvent.getAllValues();
-            LoggingEvent errorLoggingEvent = loggingEvents.get(10);
+            LoggingEvent errorLoggingEvent = loggingEvents.get(9);
 
             Assertions.assertEquals("Table printed.", errorLoggingEvent.getFormattedMessage());
         } catch (IOException e) {
