@@ -1,10 +1,10 @@
-package printers;
+package processors;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import prac.shpp.calculation.CalculationModule;
-import prac.shpp.dtos.PropertiesDTO;
-import prac.shpp.entities.Table;
+import prac.shpp.pojo.Properties;
+import prac.shpp.pojo.Table;
 import prac.shpp.enums.NumberType;
 import prac.shpp.printers.TablePrinter;
 
@@ -22,7 +22,7 @@ class TestTablePrinter {
                     "|         2|         2|         4|\n" +
                     "+----------+----------+----------+\n";
 
-        PropertiesDTO properties = new PropertiesDTO("1", "2", "1");
+        Properties properties = new Properties("1", "2", "1");
         CalculationModule calculation = new CalculationModule(properties, NumberType.BYTE);
         Table table = calculation.createAndProcessTable();
         TablePrinter.printTable(table);

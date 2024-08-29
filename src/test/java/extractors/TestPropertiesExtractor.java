@@ -2,7 +2,7 @@ package extractors;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import prac.shpp.dtos.PropertiesDTO;
+import prac.shpp.pojo.Properties;
 import prac.shpp.enums.NumberType;
 import prac.shpp.extractors.PropertiesExtractor;
 
@@ -50,7 +50,7 @@ class TestPropertiesExtractor {
     @Test
     void testExtractNumberPropertiesValidFile() throws IOException {
         String validFilename = "test.properties";
-        PropertiesDTO properties = PropertiesExtractor.extractNumberProperties(validFilename);
+        Properties properties = PropertiesExtractor.extractNumberProperties(validFilename);
 
         Assertions.assertEquals("5", properties.getMinimumNumber());
         Assertions.assertEquals("6", properties.getMaximumNumber());

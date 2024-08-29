@@ -2,7 +2,7 @@ package prac.shpp.printers;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import prac.shpp.entities.Table;
+import prac.shpp.pojo.Table;
 import prac.shpp.validators.OverflowValidator;
 
 import java.math.BigDecimal;

@@ -1,6 +1,6 @@
 package prac.shpp.validators;
 
-import prac.shpp.dtos.PropertiesDTO;
+import prac.shpp.pojo.Properties;
 import prac.shpp.enums.NumberType;
 
 import java.math.BigDecimal;
@@ -14,7 +14,7 @@ public class PropertiesValidator {
         throw new IllegalStateException("Utility class");
     }
 
-    public static boolean validate(PropertiesDTO properties, NumberType numberType) {
+    public static boolean validate(Properties properties, NumberType numberType) {
         LOGGER.debug("Properties validation called.");
 
         BigDecimal minimumNumber = new BigDecimal(properties.getMinimumNumber(), mathContext);

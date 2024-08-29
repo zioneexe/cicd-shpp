@@ -12,16 +12,11 @@ import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.slf4j.LoggerFactory;
 import prac.shpp.App;
-import prac.shpp.calculation.CalculationModule;
-import prac.shpp.dtos.PropertiesDTO;
-import prac.shpp.entities.Table;
+import prac.shpp.pojo.Properties;
 import prac.shpp.enums.NumberType;
-import prac.shpp.extractors.PropertiesExtractor;
-import prac.shpp.printers.TablePrinter;
 import prac.shpp.validators.PropertiesValidator;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -53,7 +48,7 @@ class TestApp {
     @Test
     void testIfPropsNotValidated() {
         try (var mockValidator = mockStatic(PropertiesValidator.class)) {
-            mockValidator.when(() -> PropertiesValidator.validate(any(PropertiesDTO.class), any(NumberType.class))).thenReturn(false);
+            mockValidator.when(() -> PropertiesValidator.validate(any(Properties.class), any(NumberType.class))).thenReturn(false);
 
             App.main(new String[]{});
 
@@ -71,7 +66,7 @@ class TestApp {
     @Test
     void testIfPropsValidated() {
         try (var mockValidator = mockStatic(PropertiesValidator.class)) {
-            mockValidator.when(() -> PropertiesValidator.validate(any(PropertiesDTO.class), any(NumberType.class))).thenReturn(true);
+            mockValidator.when(() -> PropertiesValidator.validate(any(Properties.class), any(NumberType.class))).thenReturn(true);
 
             App.main(new String[]{});
 

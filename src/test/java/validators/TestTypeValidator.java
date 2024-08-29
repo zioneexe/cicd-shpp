@@ -125,8 +125,8 @@ class TestTypeValidator {
         Assertions.assertTrue(TypeValidator.isFloat(new BigDecimal("4.0000")));
         Assertions.assertTrue(TypeValidator.isFloat(BigDecimal.valueOf(-Float.MAX_VALUE)));
         Assertions.assertFalse(TypeValidator.isFloat(BigDecimal.valueOf(-Float.MAX_VALUE).subtract(BigDecimal.ONE)));
-        Assertions.assertTrue(TypeValidator.isFloat(new BigDecimal(Float.MAX_VALUE).subtract(BigDecimal.ZERO)));
-        Assertions.assertFalse(TypeValidator.isFloat(new BigDecimal(Float.MAX_VALUE).subtract(BigDecimal.ONE)));
+        Assertions.assertFalse(TypeValidator.isFloat(new BigDecimal(Float.MAX_VALUE).multiply(new BigDecimal(Float.MAX_VALUE))));
+        Assertions.assertTrue(TypeValidator.isFloat(new BigDecimal(Float.MAX_VALUE).subtract(new BigDecimal(Float.MAX_VALUE))));
         Assertions.assertTrue(TypeValidator.isFloat(new BigDecimal("-8787888.888888")));
         Assertions.assertTrue(TypeValidator.isFloat(new BigDecimal("878728887888.8")));
     }

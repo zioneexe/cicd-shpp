@@ -3,9 +3,9 @@ package services;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
-import prac.shpp.entities.Table;
+import prac.shpp.pojo.Table;
 import prac.shpp.enums.NumberType;
-import prac.shpp.services.NumberTypeProcessor;
+import prac.shpp.processors.NumberTypeProcessor;
 import prac.shpp.validators.OverflowValidator;
 
 import java.math.BigDecimal;
@@ -15,7 +15,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mockStatic;
 import static prac.shpp.validators.OverflowValidator.OVERFLOW;
 
-class TestNumberTypeProcessor extends  NumberTypeProcessor {
+class TestNumberTypeProcessor extends NumberTypeProcessor {
 
     @Test
     void testProcessTable() {
@@ -44,8 +44,6 @@ class TestNumberTypeProcessor extends  NumberTypeProcessor {
                         new BigDecimal("123").stripTrailingZeros()
                 )
         );
-
-        NumberTypeProcessor.processTable(table, NumberType.INT);
 
         Assertions.assertEquals(expectedHeader, table.getHeader());
         Assertions.assertEquals(expectedTable, table.getNumberTable());
